@@ -34,7 +34,7 @@ variable "subnet_prefix" {
 variable "instance_type" {
   type        = string
   description = "(Optional) Specifies the AWS instance type. Defaults to t3.micro."
-  default     = "t3.micro"
+  default     = "t2.nano"
 }
 
 variable "height" {
