@@ -19,13 +19,24 @@ resource "aws_vpc" "diamond_dogs" {
   }
 }
 
-resource "aws_subnet" "diamond_dogs" {
-  vpc_id     = aws_vpc.diamond_dogs.id
-  cidr_block = var.subnet_prefix
-  availability_zone = "us-east-1b"  # Add this: Supported for t2.nano
+resource "aws_subnet" "diamond_dogs_primary" {
+  vpc_id            = aws_vpc.diamond_dogs.id
+  cidr_block        = var.subnet_prefix  # e.g., 10.0.10.0/24
+  availability_zone = "us-east-1b"
 
   tags = {
-    name = "${var.prefix}-subnet"
+    name = "${var.prefix}-subnet-primary"
+  }
+}
+
+# New: Second subnet in different AZ
+resource "aws_subnet" "diamond_dogs_secondary" {
+  vpc_id            = aws_vpc.diamond_dogs.id
+  cidr_block        = "10.0.20.0/24"  # New CIDR to avoid overlap
+  availability_zone = "us-east-1a"
+
+  tags = {
+    name = "${var.prefix}-subnet-secondary"
   }
 }
 
@@ -107,8 +118,14 @@ resource "aws_route_table" "diamond_dogs" {
   }
 }
 
-resource "aws_route_table_association" "diamond_dogs" {
-  subnet_id      = aws_subnet.diamond_dogs.id
+resource "aws_route_table_association" "diamond_dogs_primary" {
+  subnet_id      = aws_subnet.diamond_dogs_primary.id
+  route_table_id = aws_route_table.diamond_dogs.id
+}
+
+# New: Association for second subnet
+resource "aws_route_table_association" "diamond_dogs_secondary" {
+  subnet_id      = aws_subnet.diamond_dogs_secondary.id
   route_table_id = aws_route_table.diamond_dogs.id
 }
 
@@ -132,7 +149,7 @@ resource "aws_instance" "diamond_dogs" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   associate_public_ip_address = true
-  subnet_id                   = aws_subnet.diamond_dogs.id
+  subnet_id                   = aws_subnet.diamond_dogs_primary.id  # Use primary subnet for EC2
   vpc_security_group_ids      = [aws_security_group.diamond_dogs.id]
 
   user_data_replace_on_change = true
@@ -198,13 +215,13 @@ resource "aws_acm_certificate_validation" "domain_cert_validation" {
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
 
-# New: ALB
+# New: ALB (now with two subnets)
 resource "aws_lb" "diamond_dogs" {
   name               = "${var.prefix}-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
-  subnets            = [aws_subnet.diamond_dogs.id]
+  subnets            = [aws_subnet.diamond_dogs_primary.id, aws_subnet.diamond_dogs_secondary.id]  # Fixed: Two AZs
 
   enable_deletion_protection = false
 
