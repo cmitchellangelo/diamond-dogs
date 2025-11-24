@@ -54,3 +54,9 @@ variable "placeholder" {
   default     = "placedog.net"
   description = "(Optional) Diamond Dog URL. Defaults to placedog.net."
 }
+
+variable "domain_name" {
+  type        = string
+  description = "(Required) The domain name for the website and SSL cert (e.g., chaseloydmitchell.com)."
+  default     = "chaseloydmitchell.com"
+}

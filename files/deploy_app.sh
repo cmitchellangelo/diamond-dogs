@@ -5,6 +5,7 @@
 sudo apt -y update
 sudo apt -y install apache2 cowsay
 sudo systemctl start apache2
+sudo systemctl enable apache2
 sudo chown -R ubuntu:ubuntu /var/www/html
 
 cat << EOM > /var/www/html/index.html
@@ -153,5 +154,49 @@ cat << EOM > /var/www/html/index.html
   </body>
 </html>
 EOM
+
+# Configure Apache VirtualHost for the domain (HTTP only, for Certbot to use)
+sudo bash -c "cat > /etc/apache2/sites-available/000-default.conf << EOF
+<VirtualHost *:80>
+    ServerName ${domain_name}
+    ServerAlias www.${domain_name}
+    DocumentRoot /var/www/html
+
+    <Directory /var/www/html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog \${APACHE_LOG_DIR}/error.log
+    CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+EOF"
+
+# Enable necessary Apache modules and reload
+sudo a2enmod ssl rewrite
+sudo a2ensite 000-default
+sudo systemctl reload apache2
+
+# Install Certbot for Apache
+sudo apt install -y certbot python3-certbot-apache
+
+# Wait for DNS propagation and obtain cert with retries (up to 1 hour)
+echo "Waiting for DNS propagation before Certbot..."
+for i in {1..60}; do
+  if sudo certbot --apache --non-interactive --agree-tos --email your-email@example.com -d ${domain_name} -d www.${domain_name}; then
+    echo "Certbot succeeded!"
+    break
+  else
+    echo "Certbot attempt $i failed (likely DNS not ready). Retrying in 60s..."
+    sleep 60
+  fi
+done
+
+# Test renewal (runs via cron automatically)
+sudo certbot renew --dry-run
+
+# Restart Apache to apply HTTPS config
+sudo systemctl restart apache2
 
 cowsay ${project} Resume - Deployed!

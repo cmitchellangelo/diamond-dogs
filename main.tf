@@ -112,10 +112,11 @@ resource "aws_instance" "diamond_dogs" {
 
   user_data_replace_on_change = true
   user_data = templatefile("${path.module}/files/deploy_app.sh", {
-    placeholder = var.placeholder
-    width       = var.width
-    height      = var.height
-    project     = var.project
+    placeholder   = var.placeholder
+    width         = var.width
+    height        = var.height
+    project       = var.project
+    domain_name   = var.domain_name
   })
 
   tags = {
@@ -125,6 +126,10 @@ resource "aws_instance" "diamond_dogs" {
 
 resource "aws_eip" "diamond_dogs" {
   instance = aws_instance.diamond_dogs.id
+
+  tags = {
+    Name = "${var.prefix}-eip"
+  }
 }
 
 resource "aws_eip_association" "diamond_dogs" {
