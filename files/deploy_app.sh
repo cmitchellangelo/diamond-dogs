@@ -10,27 +10,75 @@ sudo chown -R ubuntu:ubuntu /var/www/html
 cat << EOM > /var/www/html/index.html
 <html>
   <head>
-    <title>${project} Resume</title>
-    <style>
-      body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f8f9fa; }
-      h1, h2, h3 { color: #333; }
-      ul { list-style-type: disc; padding-left: 20px; }
-      .contact { text-align: center; font-weight: bold; margin-bottom: 20px; }
-      .section { margin-bottom: 20px; }
-      .success-story { text-align: center; margin-bottom: 20px; }
-      .success-story a { 
-        display: inline-block; 
-        background-color: #007bff; 
-        color: white; 
-        padding: 10px 20px; 
-        text-decoration: none; 
-        border-radius: 5px; 
-        font-weight: bold; 
-        transition: background-color 0.3s ease; 
+  <title>${project} Resume</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f8f9fa; }
+    h1, h2, h3 { color: #333; }
+    ul { list-style-type: disc; padding-left: 20px; }
+    .contact { text-align: center; font-weight: bold; margin-bottom: 20px; }
+    .section { margin-bottom: 20px; }
+    .success-story { text-align: center; margin-bottom: 20px; }
+    .success-story a { 
+      display: inline-block; 
+      background-color: #007bff; 
+      color: white; 
+      padding: 10px 20px; 
+      text-decoration: none; 
+      border-radius: 5px; 
+      font-weight: bold; 
+      transition: background-color 0.3s ease; 
+    }
+    .success-story a:hover { background-color: #0056b3; }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      body { margin: 10px; font-size: 16px; } /* Base font prevents iOS zoom; reduce margins */
+      
+      /* Resize and stack images to fit; center them above content */
+      img[src*="datacenterleft.png"],
+      img[src*="datacenterright.png"] {
+        position: relative !important; /* Override absolute positioning */
+        display: block;
+        width: 100% !important; /* Full width but capped; add height: auto if aspect ratio issues */
+        height: auto;
+        max-width: 300px; /* Prevents huge scaling on mid-sized phones */
+        margin: 0 auto 15px auto; /* Center and space from content */
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
       }
-      .success-story a:hover { background-color: #0056b3; }
-    </style>
-  </head>
+      
+      /* Full-width, tap-friendly success link */
+      .success-story {
+        margin-bottom: 15px;
+      }
+      .success-story a {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-size: 16px; /* Touch target ~48px tall */
+      }
+      
+      /* Loosen up content */
+      .section { margin-bottom: 15px; }
+      ul { padding-left: 15px; }
+      h1 { font-size: 1.8em; }
+      h2, h3 { font-size: 1.3em; }
+      p, li { font-size: 14px; line-height: 1.5; } /* Easier reading */
+    }
+
+    /* Ultra-small screens (e.g., <400px) */
+    @media (max-width: 400px) {
+      body { margin: 5px; }
+      img[src*="datacenterleft.png"],
+      img[src*="datacenterright.png"] {
+        max-width: 250px !important;
+      }
+      .success-story a { padding: 12px; }
+    }
+  </style>
+</head>
   <body>
   <img src="https://chase-mitchell-resume-images-development-jain.s3.us-east-1.amazonaws.com/datacenterleft.png" 
        style="position:absolute; top:10px; left:10px; width:360px;">
