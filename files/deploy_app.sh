@@ -42,7 +42,7 @@ cat << EOM > /var/www/html/index.html
           <li>Agile methodologies</li>
           <li>Troubleshooting</li>
           <li>Communication</li>
-          <li>Automation</li>
+          <li>Automation/Terraform Cloud</li>
           <li>Client Engagement</li>
           <li>Process Improvement</li>
           <li>Pipelines</li>
@@ -75,7 +75,7 @@ cat << EOM > /var/www/html/index.html
         <p><strong>Principal Cloud Engineer</strong></p>
         <ul>
           <li>Key Achievement &ndash; Spearheaded the inaugural rollout of automated AWS/Azure solutions via catalog items, delivering fully configured environments to fifteen Virginia State (VITA) agencies and eliminating manual deployment processes.</li>
-          <li>Streamlining Cloud Resource Management: Leveraging Infrastructure as Code (IaC) and Python-based workflows within the Morpheus Data platform to build AWS/Azure catalog items, eliminating manual customer provisioning and accelerating the deployment process.</li>
+          <li>Streamlining Cloud Resource Management: Leveraging Infrastructure as Code (Terraform) and Python-based workflows within the Morpheus Data platform to build AWS/Azure catalog items, eliminating manual customer provisioning and accelerating the deployment process.</li>
           <li>EKS Management and Compliance Expertise: Managing and maintaining EKS clusters in an AWS GovCloud environment to host the Morpheus Data platform, ensuring compliance with VITA Standard SEC 530 and FedRAMP requirements. Responsible for optimizing cluster performance, ensuring high availability, and supporting integrated services like M2, GitLab, and Apptio. Utilizing HELM for efficient application deployment and configuration management within the cluster.</li>
         </ul>
 
