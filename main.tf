@@ -323,9 +323,15 @@ resource "aws_route53_record" "www" {
   }
 }
 
-# S3 Bucket for Resume Images
+# S3 Bucket for Resume Images (Fixed Name Validation)
+resource "random_string" "bucket_suffix" {
+  length  = 4
+  special = false
+  upper   = false  # Keep lowercase
+}
+
 resource "aws_s3_bucket" "resume_images" {
-  bucket = "$$ {var.project}-resume-images- $${var.environment}"
+  bucket = "${lower(replace(var.project, " ", "-"))}-resume-images-${lower(replace(var.environment, " ", "-"))}-${random_string.bucket_suffix.result}"
 }
 
 resource "aws_s3_bucket_public_access_block" "resume_images" {
@@ -363,4 +369,14 @@ output "alb_dns_name" {
 output "certificate_arn" {
   description = "ACM Cert ARN"
   value       = aws_acm_certificate_validation.domain_cert_validation.certificate_arn
+}
+
+output "s3_bucket_name" {
+  description = "S3 Bucket Name for Images"
+  value       = aws_s3_bucket.resume_images.bucket
+}
+
+output "s3_base_url" {
+  description = "S3 Base URL for Images"
+  value       = "https://${aws_s3_bucket.resume_images.bucket}.s3.amazonaws.com"
 }
