@@ -32,7 +32,13 @@ cat << EOM > /var/www/html/index.html
     </style>
   </head>
   <body>
-    <div style="max-width: 800px; margin: 0 auto;">
+  <img src="https://chase-mitchell-resume-images-development-jain.s3.us-east-1.amazonaws.com/datacenterleft.png" 
+       style="position:absolute; top:10px; left:10px; width:120px;">
+
+  <img src="https://chase-mitchell-resume-images-development-jain.s3.us-east-1.amazonaws.com/datacenterright.png" 
+       style="position:absolute; top:10px; right:10px; width:120px;">
+
+  <div style="max-width: 800px; margin: 0 auto;">
 
       <!-- SUCCESS STORY LINK -->
       <div class="success-story">
