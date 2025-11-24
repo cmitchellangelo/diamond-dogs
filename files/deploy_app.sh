@@ -114,6 +114,7 @@ cat << EOM > /var/www/html/index.html
         <ul>
           <li>AWS/Azure Solutions</li>
           <li>Network Management</li>
+          <li>Kubernetes/Containerization</li>
           <li>Solution Development</li>
           <li>Agile methodologies</li>
           <li>Troubleshooting</li>
@@ -123,7 +124,6 @@ cat << EOM > /var/www/html/index.html
           <li>Process Improvement</li>
           <li>Pipelines</li>
           <li>Linux and Windows administration</li>
-          <li>Customer Service</li>
         </ul>
       </div>
 
