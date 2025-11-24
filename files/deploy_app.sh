@@ -168,8 +168,8 @@ sudo bash -c "cat > /etc/apache2/sites-available/000-default.conf << EOF
         Require all granted
     </Directory>
 
-    ErrorLog \${APACHE_LOG_DIR}/error.log
-    CustomLog \${APACHE_LOG_DIR}/access.log combined
+    ErrorLog \$\$APACHE_LOG_DIR/error.log
+    CustomLog \$\$APACHE_LOG_DIR/access.log combined
 </VirtualHost>
 EOF"
 
@@ -184,7 +184,7 @@ sudo apt install -y certbot python3-certbot-apache
 # Wait for DNS propagation and obtain cert with retries (up to 1 hour)
 echo "Waiting for DNS propagation before Certbot..."
 for i in {1..60}; do
-  if sudo certbot --apache --non-interactive --agree-tos --email your-email@example.com -d ${domain_name} -d www.${domain_name}; then
+  if sudo certbot --apache --non-interactive --agree-tos --email cmitchellangelo@gmail.com -d ${domain_name} -d www.${domain_name}; then
     echo "Certbot succeeded!"
     break
   else
