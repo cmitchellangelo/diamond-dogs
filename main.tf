@@ -131,3 +131,27 @@ resource "aws_eip_association" "diamond_dogs" {
   instance_id   = aws_instance.diamond_dogs.id
   allocation_id = aws_eip.diamond_dogs.id
 }
+
+# Data source to fetch the existing Route 53 hosted zone for the registered domain
+data "aws_route53_zone" "chaseloydmitchell" {
+  name         = "chaseloydmitchell.com"
+  private_zone = false
+}
+
+# A record for the apex domain (chaseloydmitchell.com) pointing to the EIP
+resource "aws_route53_record" "apex" {
+  zone_id = data.aws_route53_zone.chaseloydmitchell.zone_id
+  name    = "chaseloydmitchell.com"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.diamond_dogs.public_ip]
+}
+
+# A record for the www subdomain (www.chaseloydmitchell.com) pointing to the EIP
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.chaseloydmitchell.zone_id
+  name    = "www.chaseloydmitchell.com"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.diamond_dogs.public_ip]
+}
