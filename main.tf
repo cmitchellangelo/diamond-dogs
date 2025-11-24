@@ -19,20 +19,21 @@ resource "aws_vpc" "diamond_dogs" {
   }
 }
 
-resource "aws_subnet" "diamond_dogs_primary" {
-  vpc_id            = aws_vpc.diamond_dogs.id
-  cidr_block        = var.subnet_prefix  # e.g., 10.0.10.0/24
-  availability_zone = "us-east-1b"
+# Keep original subnet as-is (no rename)
+resource "aws_subnet" "diamond_dogs" {
+  vpc_id     = aws_vpc.diamond_dogs.id
+  cidr_block = var.subnet_prefix  # 10.0.10.0/24 - existing, no conflict
+  availability_zone = "us-east-1b"  # Add this: Supported for t2.nano
 
   tags = {
-    name = "${var.prefix}-subnet-primary"
+    name = "${var.prefix}-subnet"
   }
 }
 
-# New: Second subnet in different AZ
+# New: Second subnet in different AZ (new CIDR to avoid conflict)
 resource "aws_subnet" "diamond_dogs_secondary" {
   vpc_id            = aws_vpc.diamond_dogs.id
-  cidr_block        = "10.0.20.0/24"  # New CIDR to avoid overlap
+  cidr_block        = "10.0.20.0/24"  # New CIDR, no overlap
   availability_zone = "us-east-1a"
 
   tags = {
@@ -118,8 +119,9 @@ resource "aws_route_table" "diamond_dogs" {
   }
 }
 
-resource "aws_route_table_association" "diamond_dogs_primary" {
-  subnet_id      = aws_subnet.diamond_dogs_primary.id
+# Keep original association as-is
+resource "aws_route_table_association" "diamond_dogs" {
+  subnet_id      = aws_subnet.diamond_dogs.id
   route_table_id = aws_route_table.diamond_dogs.id
 }
 
@@ -149,7 +151,7 @@ resource "aws_instance" "diamond_dogs" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   associate_public_ip_address = true
-  subnet_id                   = aws_subnet.diamond_dogs_primary.id  # Use primary subnet for EC2
+  subnet_id                   = aws_subnet.diamond_dogs.id  # Original subnet
   vpc_security_group_ids      = [aws_security_group.diamond_dogs.id]
 
   user_data_replace_on_change = true
@@ -221,7 +223,7 @@ resource "aws_lb" "diamond_dogs" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
-  subnets            = [aws_subnet.diamond_dogs_primary.id, aws_subnet.diamond_dogs_secondary.id]  # Fixed: Two AZs
+  subnets            = [aws_subnet.diamond_dogs.id, aws_subnet.diamond_dogs_secondary.id]  # Fixed: Original + new
 
   enable_deletion_protection = false
 
