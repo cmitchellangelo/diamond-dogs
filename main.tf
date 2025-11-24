@@ -285,7 +285,7 @@ resource "aws_route53_record" "apex" {
   name    = var.domain_name
   type    = "A"
 
-  aliases {
+  alias {
     name                   = aws_lb.diamond_dogs.dns_name
     zone_id                = aws_lb.diamond_dogs.zone_id
     evaluate_target_health = true
@@ -297,7 +297,7 @@ resource "aws_route53_record" "www" {
   name    = "www.${var.domain_name}"
   type    = "A"
 
-  aliases {
+  alias {
     name                   = aws_lb.diamond_dogs.dns_name
     zone_id                = aws_lb.diamond_dogs.zone_id
     evaluate_target_health = true
