@@ -17,10 +17,27 @@ cat << EOM > /var/www/html/index.html
       ul { list-style-type: disc; padding-left: 20px; }
       .contact { text-align: center; font-weight: bold; margin-bottom: 20px; }
       .section { margin-bottom: 20px; }
+      .success-story { text-align: center; margin-bottom: 20px; }
+      .success-story a { 
+        display: inline-block; 
+        background-color: #007bff; 
+        color: white; 
+        padding: 10px 20px; 
+        text-decoration: none; 
+        border-radius: 5px; 
+        font-weight: bold; 
+        transition: background-color 0.3s ease; 
+      }
+      .success-story a:hover { background-color: #0056b3; }
     </style>
   </head>
   <body>
     <div style="max-width: 800px; margin: 0 auto;">
+
+      <!-- SUCCESS STORY LINK -->
+      <div class="success-story">
+        <a href="https://nexgent.com/zero-to-engineer-from-college-debt-to-debt-free-network-engineer/" target="_blank">Discover My Success Story: From College Debt to Debt-Free Network Engineer</a>
+      </div>
 
       <!-- RESUME CONTENT -->
       <div class="contact">
