@@ -12,7 +12,7 @@ cat << EOM > /var/www/html/index.html
   <head>
     <title>${project} Resume</title>
     <style>
-      body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+      body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f8f9fa; }
       h1, h2, h3 { color: #333; }
       ul { list-style-type: disc; padding-left: 20px; }
       .contact { text-align: center; font-weight: bold; margin-bottom: 20px; }
