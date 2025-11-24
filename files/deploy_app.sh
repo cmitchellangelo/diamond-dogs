@@ -93,6 +93,11 @@ cat << EOM > /var/www/html/index.html
         <a href="https://nexgent.com/zero-to-engineer-from-college-debt-to-debt-free-network-engineer/" target="_blank">Discover My Success Story: From College Debt to Debt-Free Network Engineer</a>
       </div>
 
+      <!-- GITHUB REPO LINK -->
+      <div class="success-story">
+        <a href="https://github.com/cmitchellangelo/diamond-dogs" target="_blank">Github Repo</a>
+      </div>
+
       <!-- RESUME CONTENT -->
       <div class="contact">
         <h1>Chase Loyd Mitchell</h1>
