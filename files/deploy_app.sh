@@ -36,7 +36,7 @@ cat << EOM > /var/www/html/index.html
        style="position:absolute; top:10px; left:10px; width:360px;">
 
   <img src="https://chase-mitchell-resume-images-development-jain.s3.us-east-1.amazonaws.com/datacenterright.png" 
-       style="position:absolute; top:10px; right:10px; width:360px;">
+       style="position:absolute; top:10px; right:10px; width:480px;">
 
   <div style="max-width: 800px; margin: 0 auto;">
 
