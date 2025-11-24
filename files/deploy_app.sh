@@ -12,7 +12,7 @@ cat << EOM > /var/www/html/index.html
   <head>
     <title>${project} Resume</title>
     <style>
-      body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; position: relative; }
+      body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
       h1, h2, h3 { color: #333; }
       ul { list-style-type: disc; padding-left: 20px; }
       .contact { text-align: center; font-weight: bold; margin-bottom: 20px; }
@@ -29,41 +29,10 @@ cat << EOM > /var/www/html/index.html
         transition: background-color 0.3s ease; 
       }
       .success-story a:hover { background-color: #0056b3; }
-      /* Styles for Top Left/Right Background Images */
-      .header-background {
-        position: relative;
-        height: 200px;  /* Adjust height to fit images */
-        margin-bottom: 20px;
-        overflow: hidden;
-      }
-      .left-bg-img {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 150px;  /* Adjust size as needed */
-        height: auto;
-        opacity: 0.3;  /* Subtle background */
-        z-index: -1;
-      }
-      .right-bg-img {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 150px;  /* Adjust size as needed */
-        height: auto;
-        opacity: 0.3;  /* Subtle background */
-        z-index: -1;
-      }
     </style>
   </head>
   <body>
     <div style="max-width: 800px; margin: 0 auto;">
-
-      <!-- Top Left/Right Background Images -->
-      <div class="header-background">
-        <img src="https://chase-mitchell-resume-images-development-jain.s3.us-east-1.amazonaws.com/datacenterleft.png" alt="" class="left-bg-img">
-        <img src="https://chase-mitchell-resume-images-development-jain.s3.us-east-1.amazonaws.com/datacenterright.png" alt="" class="right-bg-img">
-      </div>
 
       <!-- SUCCESS STORY LINK -->
       <div class="success-story">
