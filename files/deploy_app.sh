@@ -3,9 +3,27 @@
 # The web app displays a professional resume.
 
 sudo apt -y update
-sudo apt -y install apache2 cowsay
+sudo apt -y install apache2 cowsay php libapache2-mod-php
 sudo systemctl start apache2
 sudo chown -R ubuntu:ubuntu /var/www/html
+
+# Create the counter file (writable by web server/user)
+echo 0 > /var/www/html/counter.txt
+chmod 666 /var/www/html/counter.txt
+
+# Create the PHP counter endpoint
+cat << 'EOF' > /var/www/html/counter.php
+<?php
+$file = 'counter.txt';
+if (!file_exists($file)) {
+    file_put_contents($file, "0");
+}
+$count = (int)trim(file_get_contents($file));
+$count++;
+file_put_contents($file, $count);
+echo $count;
+?>
+EOF
 
 cat << EOM > /var/www/html/index.html
 <html>
@@ -103,6 +121,18 @@ cat << EOM > /var/www/html/index.html
         <h1>Chase Loyd Mitchell</h1>
         <p>cmitchellangelo@gmail.com | (830) 357-8935</p>
       </div>
+
+      <!-- VISITOR COUNTER -->
+      <div style="text-align:center; margin-bottom:20px; font-weight:bold;">
+        Visitors: <span id="visitorCount">Loading...</span>
+      </div>
+
+      <script>
+        fetch("counter.php")
+          .then(r => r.text())
+          .then(num => document.getElementById("visitorCount").innerText = num)
+          .catch(() => document.getElementById("visitorCount").innerText = "N/A");
+      </script>
 
       <div class="section">
         <h2>Career Summary</h2>
