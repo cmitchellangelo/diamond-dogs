@@ -1,18 +1,18 @@
-# terraform {
-#   required_providers {
-#     aws = {
-#       source  = "hashicorp/aws"
-#       version = "~>5.0"
-#     }
-#   }
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~>5.0"
+    }
+  }
 
 
-#   cloud { 
+  cloud { 
     
-#     organization = "globalmantics-hcp-clm" 
+    organization = "globalmantics-hcp-clm" 
 
-#     workspaces { 
-#       name = "diamonddogs-app-useast1-dev" 
-#     } 
-#   }
-# }
+    workspaces { 
+      name = "diamonddogs-app-useast1-dev" 
+    } 
+  }
+}
